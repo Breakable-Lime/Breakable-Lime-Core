@@ -1,5 +1,4 @@
 var target = Argument("target", "Test");
-var solutions = GetFiles("./**/*.sln");
 var configuration = Argument("configuration", "Release");
 
 //////////////////////////////////////////////////////////////////////
@@ -8,10 +7,7 @@ var configuration = Argument("configuration", "Release");
 
 Task("Restore")
     .Does(() => {
-      foreach(var sln in solutions) {
-	  Information("Restoring {solution}", sln);
-	  NuGetRestore(solutions);
-	}
+        DotNetCoreRestore("./");
     });
 
 Task("Clean")
