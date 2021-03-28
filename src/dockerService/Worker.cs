@@ -1,20 +1,24 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace DockerBackgroundService
+namespace BreakableLime.DockerBackgroundService
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly IContainer _dependencyContainer;
+        private readonly ILogger _logger;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(IDockerHostedServiceDependencyContainerBuilder dependencyContainerBuilder)
         {
-            _logger = logger;
+            dependencyContainerBuilder.AddServices();
+            _dependencyContainer = dependencyContainerBuilder.BuildContainer();
+            
+            using var dependencyLifetimeScope = _dependencyContainer.BeginLifetimeScope();
+            _logger = dependencyLifetimeScope.Resolve<ILogger>();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
