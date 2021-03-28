@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakableLime.Host", "src\h
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakableLime.Repository", "src\repository\BreakableLime.Repository.csproj", "{3C724CC6-8DA9-4272-A7DA-33BF5930CEB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockerBackgroundService", "src\dockerService\DockerBackgroundService.csproj", "{ECE82F99-AC73-4034-A648-A2AD4F9E59DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakableLime.DockerBackgroundService", "src\dockerService\BreakableLime.DockerBackgroundService.csproj", "{ECE82F99-AC73-4034-A648-A2AD4F9E59DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
