@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\authentication\BreakableLime.Authentication.csproj" />
+    <ProjectReference Include="..\repository\BreakableLime.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

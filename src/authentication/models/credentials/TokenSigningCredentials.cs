@@ -8,12 +8,14 @@ namespace BreakableLime.Authentication.models.credentials
     public class TokenSigningCredentials : ITokenSigningCredentials
     {
         public SigningCredentials SigningCredentials { get; init; }
-        
+        public SymmetricSecurityKey SecurityKey { get; init; }
         
 
         public TokenSigningCredentials(string secret)
         {
             var key = GetSecurityKey(secret);
+            SecurityKey = key;
+            
             var credentials = CreateSigningCredentials(key);
 
             SigningCredentials = credentials;

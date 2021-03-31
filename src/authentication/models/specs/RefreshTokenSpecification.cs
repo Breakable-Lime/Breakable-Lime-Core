@@ -2,7 +2,7 @@ using System;
 
 namespace BreakableLime.Authentication.models.specs
 {
-    public record RefreshTokenSpecification : TokenSpecificationBase
+    public record RefreshTokenSpecification : TokenSpecification
     {
         public string RefreshHttpMethod { get; init; }
         public string RefreshHttpUrl { get; init; }
