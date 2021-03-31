@@ -9,6 +9,6 @@ namespace BreakableLime.Authentication.models.tokens
         public DateTime Expiration { get; init; }
         
         public string RefreshHttpMethod { get; init; }
-        public string RefreshHttpUrl { get; set; }
+        public string RefreshHttpUrl { get; init; }
     }
 }
