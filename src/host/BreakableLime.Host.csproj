@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0-preview.2.21154.6" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.10.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.0.1-dev-00219" />
     <PackageReference Include="Serilog.Enrichers.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Serilog.Enrichers.Context" Version="4.5.0-develop-00040" />
@@ -16,6 +18,13 @@
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.ElasticSearch" Version="8.5.0-alpha0003" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\authenticationFunctions\BreakableLime.Authentication.Functions.csproj" />
+    <ProjectReference Include="..\authentication\BreakableLime.Authentication.csproj" />
+    <ProjectReference Include="..\dockerService\BreakableLime.DockerBackgroundService.csproj" />
+    <ProjectReference Include="..\repository\BreakableLime.Repository.csproj" />
   </ItemGroup>
 
 </Project>

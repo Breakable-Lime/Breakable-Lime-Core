@@ -1,7 +1,8 @@
+using BreakableLime.Authentication.models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BreakableLime.Repository {
-  public class ApplicationDbContext : IdentityDbContext //TODO: Change to generically use the ApplicationIdentityUser when created
+  public class ApplicationDbContext : IdentityDbContext<ApplicationIdentityUser>
     {
 
     }
