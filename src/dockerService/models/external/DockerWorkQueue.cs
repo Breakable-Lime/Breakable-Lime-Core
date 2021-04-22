@@ -7,24 +7,24 @@ namespace BreakableLime.DockerBackgroundService.models.external
     {
         public DockerWorkQueue()
         {
-            _queue = new ConcurrentQueue<DockerWorkItemBase>();
+            _queue = new ConcurrentQueue<DockerWorkItem>();
         }
         
-        private readonly ConcurrentQueue<DockerWorkItemBase> _queue;
+        private readonly ConcurrentQueue<DockerWorkItem> _queue;
         
-        public CancellationToken Enqueue(DockerWorkItemBase workItemBase)
+        public CancellationToken Enqueue(DockerWorkItem workItem)
         {
             var token = new CancellationToken();
-            var item = workItemBase with {CancellationToken = token};
+            var item = workItem with {CancellationToken = token};
             
             _queue.Enqueue(item);
             
             return token;
         }
 
-        public bool Dequeue(out DockerWorkItemBase workItemBase)
+        public bool Dequeue(out DockerWorkItem workItem)
         {
-            return _queue.TryDequeue(out workItemBase);
+            return _queue.TryDequeue(out workItem);
         }
     }
 }

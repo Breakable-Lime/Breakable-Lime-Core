@@ -5,7 +5,7 @@ namespace BreakableLime.DockerBackgroundService.models.external
 {
     public interface IDockerWorkQueue
     {
-        public CancellationToken Enqueue(DockerWorkItemBase workItemBase);
-        public bool Dequeue(out DockerWorkItemBase workItemBase);
+        public CancellationToken Enqueue(DockerWorkItem workItem);
+        public bool Dequeue(out DockerWorkItem workItem);
     }
 }

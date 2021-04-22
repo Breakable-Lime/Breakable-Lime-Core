@@ -5,15 +5,15 @@ namespace BreakableLime.DockerBackgroundService.Handlers
 {
     public abstract class DockerActionHandlerBase : IDockerActionHandler
     {
-        private readonly IDockerClient _dockerClient;
-        private readonly DockerWorkItemBase _actionSpecification;
+        internal readonly IDockerClient DockerClient;
+        internal readonly DockerWorkItem ActionSpecification;
 
-        internal DockerActionHandlerBase(IDockerClient dockerClient, DockerWorkItemBase actionSpecification)
+        internal DockerActionHandlerBase(IDockerClient dockerClient, DockerWorkItem actionSpecification)
         {
-            _dockerClient = dockerClient;
-            _actionSpecification = actionSpecification;
+            DockerClient = dockerClient;
+            ActionSpecification = actionSpecification;
         }
-        
+
         public abstract void Execute();
     }
 }
