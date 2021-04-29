@@ -3,10 +3,9 @@ using System.Threading;
 
 namespace BreakableLime.DockerBackgroundService.models.external
 {
-    public abstract record DockerWorkItemBase
+    public abstract record DockerWorkItem
     {
-        public DockerWorkType DockerWorkType { get; init; }
-        public IDockerWorkSpecification Specifications { get; init; }
+        public DockerWorkSpecificationMarker SpecificationsMarker { get; init; }
         public CancellationToken CancellationToken { get; init; } 
     }
 
