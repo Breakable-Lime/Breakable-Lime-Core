@@ -14,7 +14,6 @@ namespace BreakableLime.DockerBackgroundService
 {
     public class Worker : BackgroundService
     {
-        private readonly IContainer _dependencyContainer;
         private readonly ILogger _logger;
 
         private readonly CreateContainerHandlerFactory _createContainerHandlerFactory;
@@ -23,9 +22,9 @@ namespace BreakableLime.DockerBackgroundService
         public Worker(IDockerHostedServiceDependencyContainerBuilder dependencyContainerBuilder)
         {
             dependencyContainerBuilder.AddServices();
-            _dependencyContainer = dependencyContainerBuilder.BuildContainer();
+            var dependencyContainer = dependencyContainerBuilder.BuildContainer();
             
-            using var dependencyLifetimeScope = _dependencyContainer.BeginLifetimeScope();
+            using var dependencyLifetimeScope = dependencyContainer.BeginLifetimeScope();
             
             _logger = dependencyLifetimeScope.Resolve<ILogger>();
             _createContainerHandlerFactory = dependencyLifetimeScope.Resolve<CreateContainerHandlerFactory>();
@@ -40,9 +39,10 @@ namespace BreakableLime.DockerBackgroundService
                     //fetch factories
                     //create handler
                     //execute
-                DockerWorkItem item;
-                while (_dockerWorkQueue.Dequeue(out item))
+                while (_dockerWorkQueue.Dequeue(out var item))
                 { 
+                    _logger.LogInformation("Executing work item: {@Item}", item);
+                    
                     IDockerActionHandlerFactory factory = item.SpecificationsMarker switch
                     {
                         CreateContainerSpecification => _createContainerHandlerFactory,

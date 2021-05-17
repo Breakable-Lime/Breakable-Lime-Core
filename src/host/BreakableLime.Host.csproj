@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0-preview.2.21154.6" />
@@ -26,10 +27,6 @@
     <ProjectReference Include="..\dockerService\BreakableLime.DockerBackgroundService.csproj" />
     <ProjectReference Include="..\externalModels\BreakableLime.ExternalModels.csproj" />
     <ProjectReference Include="..\repository\BreakableLime.Repository.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\dockerControlls" />
   </ItemGroup>
 
 </Project>
