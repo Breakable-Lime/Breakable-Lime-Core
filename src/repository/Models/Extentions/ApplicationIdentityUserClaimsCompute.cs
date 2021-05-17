@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using BreakableLime.Authentication.models;
+using BreakableLime.Authentication;
 
-namespace BreakableLime.Authentication.extensions
+namespace BreakableLime.Repository.Models.Extentions
 {
     public static class ApplicationIdentityUserClaimsCompute
     {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BreakableLime.Authentication.models;
 using BreakableLime.Repository;
+using BreakableLime.Repository.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
