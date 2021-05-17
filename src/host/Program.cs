@@ -59,7 +59,7 @@ namespace BreakableLime.Host
             }
             catch (System.Exception ex)
             {
-                Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name}", ex);
+                Log.Fatal("Failed to start {@Ex}", ex);
                 throw;
             }
         }
