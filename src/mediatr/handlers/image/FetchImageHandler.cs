@@ -4,6 +4,7 @@ using BreakableLime.DockerBackgroundService.models.external;
 using BreakableLime.ExternalModels.Requests;
 using BreakableLime.GlobalModels;
 using BreakableLime.GlobalModels.Wrappers;
+using BreakableLime.Mediatr.requests.user;
 using BreakableLime.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -33,6 +34,9 @@ namespace BreakableLime.Mediatr.handlers.image
         {
             //check allocation is allowed
                 //send to mediator to fetch with db context
+                //check allocation with extension method
+
+                var user = await _mediator.Send(new UserByIdRequest {UserId = request.OwnerId}, cancellationToken);
             
             //add fetch image to queue
                 // use _dockerWorkQueue
