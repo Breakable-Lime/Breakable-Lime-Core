@@ -1,4 +1,7 @@
 using System;
+using System.Reflection.Metadata;
+using BreakableLime.GlobalModels;
+using BreakableLime.GlobalModels.Wrappers;
 
 namespace BreakableLime.DockerBackgroundService.models.external.ActionSpecifications
 {
@@ -6,5 +9,7 @@ namespace BreakableLime.DockerBackgroundService.models.external.ActionSpecificat
     {
         public string EntityId;
         public Uri ImageUri;
+
+        public readonly DockerReturnStore<Result<Empty>> ReturnStore = new DockerReturnStore<Result<Empty>>();
     }
 }
