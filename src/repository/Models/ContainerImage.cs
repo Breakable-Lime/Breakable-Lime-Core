@@ -12,7 +12,6 @@ namespace BreakableLime.Repository.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy-hh:mm}")]
         public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
         
-        public string ImageNativeId { get; set; }
         public ApplicationIdentityUser Owner { get; set; }
         
         public Uri RepositoryLocation { get; set; }

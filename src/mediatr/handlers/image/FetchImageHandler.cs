@@ -70,7 +70,6 @@ namespace BreakableLime.Mediatr.handlers.image
                 var result = await _imageService.CreateImage(new ContainerImage
                 {
                  Owner   = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == request.OwnerId, cancellationToken),
-                 ImageNativeId = "", //TODO: perhaps through a quick httpclient request
                  RepositoryLocation = request.RepositoryUri
                 }, cancellationToken);
                 
