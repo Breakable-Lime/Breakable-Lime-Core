@@ -6,6 +6,7 @@ using BreakableLime.GlobalModels;
 using BreakableLime.GlobalModels.Wrappers;
 using BreakableLime.Mediatr.requests.user;
 using BreakableLime.Repository;
+using BreakableLime.Repository.Models.Extentions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using FetchImageRequest = BreakableLime.Mediatr.requests.image.FetchImageRequest;
@@ -35,10 +36,26 @@ namespace BreakableLime.Mediatr.handlers.image
             //check allocation is allowed
                 //send to mediator to fetch with db context
                 //check allocation with extension method
-
+                
+                //gets user
                 var user = await _mediator.Send(new UserByIdRequest {UserId = request.OwnerId}, cancellationToken);
             
-            //add fetch image to queue
+                //if !bad cont
+                if (!user.IsSuccessful)
+                {
+                    _logger.LogError("Unable to fetch image due to invalid user id {Id}", request.OwnerId);
+                    return Result<Empty>.FromError<Empty>("Unable to fetch image due to invalid user id: see log");
+                }
+                
+                //does conform
+                if (!user.Product.IsConformingToIncrementedImageAllocation())
+                {
+                    _logger.LogError("Unable to fetch image due to user having max allocation of {@Allocation}", user.Product.ImageAllocation);
+                    return Result<Empty>.FromError<Empty>("Unable to fetch image due to the user using their max image allocation");
+                }
+
+
+                //add fetch image to queue
                 // use _dockerWorkQueue
             
             //add to db
