@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using BreakableLime.DockerBackgroundService.models.external;
@@ -6,8 +7,11 @@ using BreakableLime.GlobalModels;
 using BreakableLime.GlobalModels.Wrappers;
 using BreakableLime.Mediatr.requests.user;
 using BreakableLime.Repository;
+using BreakableLime.Repository.Models;
 using BreakableLime.Repository.Models.Extentions;
+using BreakableLime.Repository.services;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using FetchImageRequest = BreakableLime.Mediatr.requests.image.FetchImageRequest;
 
@@ -19,16 +23,19 @@ namespace BreakableLime.Mediatr.handlers.image
         private readonly IMediator _mediator;
         private readonly IDockerWorkQueue _dockerWorkQueue;
         private readonly ApplicationDbContext _dbContext;
+        private readonly IImageService _imageService;
 
         public FetchImageHandler(ILogger<FetchImageHandler> logger, 
             IMediator mediator, 
             IDockerWorkQueue dockerWorkQueue, 
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext,
+            IImageService imageService)
         {
             _logger = logger;
             _mediator = mediator;
             _dockerWorkQueue = dockerWorkQueue;
             _dbContext = dbContext;
+            _imageService = imageService;
         }
         
         public async Task<Result<Empty>> Handle(FetchImageRequest request, CancellationToken cancellationToken)
@@ -60,6 +67,12 @@ namespace BreakableLime.Mediatr.handlers.image
             
             //add to db
                 //using repo
+                var result = await _imageService.CreateImage(new ContainerImage
+                {
+                 Owner   = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == request.OwnerId, cancellationToken),
+                 ImageNativeId = "", //TODO: perhaps through a quick httpclient request
+                 RepositoryLocation = request.RepositoryUri
+                }, cancellationToken);
                 
             //await fetched from server
                 //try and wait
