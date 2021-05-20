@@ -27,7 +27,7 @@ namespace BreakableLime.Host.Controllers
         /// <returns>Created or BadRequest</returns>
         [Route("Start")]
         [HttpPost]
-        public async Task<IActionResult> StartContainer([FromBody]StartContainerRequest request)
+        public Task<IActionResult> StartContainer([FromBody]StartContainerRequest request)
         {
             throw new NotImplementedException(nameof(StartContainer));
         }
@@ -39,7 +39,7 @@ namespace BreakableLime.Host.Controllers
         /// <returns>Ok or BadRequest</returns>
         [Route("Stop")]
         [HttpDelete]
-        public async Task<IActionResult> StopContainer([FromQuery]string containerId)
+        public Task<IActionResult> StopContainer([FromQuery]string containerId)
         {
             throw new NotImplementedException(nameof(StopContainer));
         }
@@ -51,7 +51,7 @@ namespace BreakableLime.Host.Controllers
         /// <returns>Ok or BadRequest</returns>
         [Route("Status")]
         [HttpGet]
-        public async Task<IActionResult> FetchContainerStatus([FromQuery]string containerId)
+        public Task<IActionResult> FetchContainerStatus([FromQuery]string containerId)
         {
             throw new NotImplementedException(nameof(FetchContainerStatus));
         }
@@ -64,7 +64,7 @@ namespace BreakableLime.Host.Controllers
         /// <returns>Ok or BadRequest</returns>
         [Route("Logs")]
         [HttpGet]
-        public async Task<IActionResult> FetchContainerLogs([FromQuery]string containerId, [FromQuery]int? numberOfLines = null)
+        public Task<IActionResult> FetchContainerLogs([FromQuery]string containerId, [FromQuery]int? numberOfLines = null)
         {
             throw new NotImplementedException(nameof(FetchContainerLogs));
         }

@@ -25,7 +25,7 @@ namespace BreakableLime.Host.Controllers
         /// <returns>Created or BadRequest</returns>
         [Route("Fetch")]
         [HttpPost]
-        public async Task<IActionResult> FetchImage([FromBody]FetchImageRequest request)
+        public Task<IActionResult> FetchImage([FromBody]FetchImageRequest request)
         {
             throw new NotImplementedException(nameof(FetchImage));
         }
@@ -37,7 +37,7 @@ namespace BreakableLime.Host.Controllers
         /// <returns>Ok or BadRequest</returns>
         [Route("Delete")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteImage([FromQuery] string imageId)
+        public Task<IActionResult> DeleteImage([FromQuery] string imageId)
         {
             throw new NotImplementedException(nameof(DeleteImage));
         }
