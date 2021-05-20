@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BreakableLime.DockerBackgroundService.models.external;
+using BreakableLime.DockerBackgroundService.models.external.ActionSpecifications;
 using BreakableLime.GlobalModels;
 using BreakableLime.GlobalModels.Wrappers;
 using BreakableLime.Mediatr.requests.image;
@@ -45,6 +47,27 @@ namespace BreakableLime.Mediatr.handlers.image
             }
             
             //delete image
+            var dockerRequest = new DockerWorkItem
+            {
+                SpecificationsMarker = new DeleteImageSpecification
+                {
+                    ImageId = image.Id
+                },
+                CancellationToken = cancellationToken
+            };
+            
+            //await docker
+            var tries = 0;
+            while (!((DeleteImageSpecification) (dockerRequest.SpecificationsMarker)).ReturnStore.IsFinished(
+                out var result) || cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(1000, cancellationToken);
+                tries++;
+                if (tries >= 3)
+                    break;
+            }
+            
+            //check cancellation
             
             
             //delete image entity
