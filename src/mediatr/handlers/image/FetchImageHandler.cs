@@ -110,6 +110,11 @@ namespace BreakableLime.Mediatr.handlers.image
                 }
                 
                 //check if cancelled
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    _logger.LogError("cancellation requested; status of image {Id} unknown", imageEntity.Id);
+                    return Result<Empty>.FromError<Empty>("cancellation requested; image status unsure");
+                }
                 
                 
                 //return result

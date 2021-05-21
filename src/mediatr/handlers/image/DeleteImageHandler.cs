@@ -58,8 +58,9 @@ namespace BreakableLime.Mediatr.handlers.image
             
             //await docker
             var tries = 0;
+            Result<Empty> result;
             while (!((DeleteImageSpecification) (dockerRequest.SpecificationsMarker)).ReturnStore.IsFinished(
-                out var result) || cancellationToken.IsCancellationRequested)
+                out result) || cancellationToken.IsCancellationRequested)
             {
                 await Task.Delay(1000, cancellationToken);
                 tries++;
@@ -67,15 +68,34 @@ namespace BreakableLime.Mediatr.handlers.image
                     break;
             }
             
-            //check cancellation
-            
+            //check docker result
+            if (!result.IsSuccessful)
+            {
+                _logger.LogError("Unable to delete stored image {Id}", image.Id);
+                return Result<Empty>.FromError<Empty>("Unable to delete store image");
+            }
+
             
             //delete image entity
             var entityResult = await _imageService.DeleteImage(image, cancellationToken);
             
-            //verify & return
+            //check cancellation
+            if (cancellationToken.IsCancellationRequested)
+            {
+                _logger.LogError("cancellation requested; status of image {Id} unknown", image.Id);
+                return Result<Empty>.FromError<Empty>("cancellation requested; image status unsure");
+            }
             
-            throw new System.NotImplementedException();
+            //verify & return
+
+            if (entityResult)
+            {
+                _logger.LogInformation("Successfully deleted image {Id}", image.Id);
+                return Result<Empty>.FromResult(new Empty());
+            }
+            
+            _logger.LogError("Deletion of image {Id} failed", image.Id);
+            return Result<Empty>.FromError<Empty>("Unable to delete image");
         }
     }
 }
