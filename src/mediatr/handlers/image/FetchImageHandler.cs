@@ -66,7 +66,8 @@ namespace BreakableLime.Mediatr.handlers.image
                     {
                         Owner = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == request.OwnerId,
                             cancellationToken),
-                        RepositoryLocation = request.RepositoryUri
+                        ImageName = request.ImageName,
+                        ImageTag = request.ImageTag
                     };
                     
                 var result = await _imageService.CreateImage(imageEntity, cancellationToken);
@@ -84,7 +85,8 @@ namespace BreakableLime.Mediatr.handlers.image
                     {
                         SpecificationsMarker = new FetchImageSpecification
                         {
-                            ImageUri = request.RepositoryUri,
+                            ImageName = request.ImageName,
+                            ImageTag = request.ImageTag,
                             EntityId = imageEntity.Id
                         },
                         CancellationToken = cancellationToken
@@ -124,7 +126,7 @@ namespace BreakableLime.Mediatr.handlers.image
                  return Result<Empty>.FromResult<Empty>(new Empty());
                 } 
                 
-                _logger.LogError("Docker Unable to fetch image with uri {@Uri}", request.RepositoryUri);
+                _logger.LogError("Docker Unable to fetch image with name {Name} and tag {Tag}", request.ImageName, request.ImageTag);
                 return dockerServResult;
         }
     }

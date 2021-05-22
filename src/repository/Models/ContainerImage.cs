@@ -14,6 +14,7 @@ namespace BreakableLime.Repository.Models
         
         public ApplicationIdentityUser Owner { get; set; }
         
-        public Uri RepositoryLocation { get; set; }
+        public string ImageName { get; set; }
+        public string ImageTag { get; set; }
     }
 }

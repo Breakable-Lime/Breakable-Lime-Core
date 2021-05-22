@@ -8,7 +8,8 @@ namespace BreakableLime.DockerBackgroundService.models.external.ActionSpecificat
     public record FetchImageSpecification : DockerWorkSpecificationMarker
     {
         public string EntityId;
-        public Uri ImageUri;
+        public string ImageName;
+        public string ImageTag;
 
         public readonly DockerReturnStore<Result<Empty>> ReturnStore = new DockerReturnStore<Result<Empty>>();
     }
