@@ -12,6 +12,8 @@ using BreakableLime.Repository.services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,14 +58,18 @@ namespace BreakableLime.Host
                     IssuerSigningKey = key
                 };
             });
-            
-            
+
+
             services.AddControllers();
+
+            //added spa
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "BreakableLime", 
+                    Title = "BreakableLime",
                     Version = "v1",
                     License = new OpenApiLicense
                     {
@@ -71,7 +77,7 @@ namespace BreakableLime.Host
                         Url = new Uri("https://tldrlegal.com/license/mit-license")
                     }
                 });
-                
+
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -79,10 +85,7 @@ namespace BreakableLime.Host
             });
 
             //add db context to DI container
-            services.AddDbContext<ApplicationDbContext>(c =>
-            {
-                c.UseInMemoryDatabase("Testing-db");
-            });
+            services.AddDbContext<ApplicationDbContext>(c => { c.UseInMemoryDatabase("Testing-db"); });
 
             //add services
             services.AddTransient<IImageService, ImageService>();
@@ -98,15 +101,32 @@ namespace BreakableLime.Host
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BreakableLime.Host v1"));
             }
 
+            app.UseSpaStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = new FileExtensionContentTypeProvider()
+            });
+
             app.UseRouting();
 
             app.UseSerilogRequestLogging();
-            
+
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseSpa(spa =>
             {
-                endpoints.MapControllers();
+
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+
             });
         }
     }
