@@ -1,8 +1,10 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router'
-import {LoginComponent} from '../app/login/login.component'
+import { NavbarComponent } from 'src/app/navbar/navbar.component';
 
 import { AuthenticationService } from '../app/authentication.service'
+
+
 
 @Component({
   selector: 'app-root',

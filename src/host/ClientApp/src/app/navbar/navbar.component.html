@@ -1,1 +1,9 @@
-<p>navbar works!</p>
+<div class="bg-gray-500 float-left h-screen w-full inline-block"> <!-- outer shell -->
+    <img src="../../assets/vectorGraphics/logo-login.svg" class="h-24"/> <!-- Logo -->
+    <hr class="border-indigo-700 mx-1 py-1">
+    <div class="flex flex-col" *ngFor="let navItem of NavigationItems"> <!-- Navigation items -->
+        <a class="bg-gray-600 px-2 py-1 text-center rounded-lg w-4/5 my-2 mx-auto text-2xl font-bold" href="{{ navItem.path }}">
+        {{ navItem.title }}
+        </a>
+    </div>
+</div>
