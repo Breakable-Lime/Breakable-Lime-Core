@@ -21,6 +21,7 @@
     "@angular/router": "~12.0.0",
     "@tailwindcss/forms": "^0.3.2",
     "@tailwindcss/typography": "^0.4.0",
+    "axios": "^0.21.1",
     "luxon": "^1.27.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",

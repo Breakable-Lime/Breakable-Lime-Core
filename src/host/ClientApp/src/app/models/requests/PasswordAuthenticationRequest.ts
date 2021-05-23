@@ -1,4 +1,4 @@
-class PasswordAuthenticationRequest {
+export default class PasswordAuthenticationRequest {
     Email: string;
     Password: string;
 

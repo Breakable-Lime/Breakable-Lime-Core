@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Token } from '../app/models/clientModels/token';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthenticationService {
     //TODO: fix
   }
 
-  public StoreTokenPair(): void {
+  public StoreTokenPair(authenticationToken: Token, refreshToken: Token | undefined): void {
     //TODO: fix
   }
 

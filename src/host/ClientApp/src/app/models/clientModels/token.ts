@@ -1,6 +1,7 @@
 import * as luxon from 'luxon';
+import { throwError } from 'rxjs';
 
-export default class Token {
+export class Token {
     Type: TokenType;
     Token: string;
     Expiration: luxon.DateTime | undefined;
@@ -8,8 +9,13 @@ export default class Token {
     /**
      *
      */
-    constructor(token: string, type: TokenType, expiery: string | undefined) {
-        this.Token = token;
+    constructor(token: string | undefined, type: TokenType, expiery: string | undefined) {
+
+        if (token == undefined) {
+            throwError;
+        }
+
+        this.Token = token as string;
         this.Type = type;
         
         if (expiery) {
