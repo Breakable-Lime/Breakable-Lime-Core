@@ -19,4 +19,8 @@ export class AuthenticationService {
   public DeAuthenticate(): void {
     //TODO: fix
   }
+
+  public IsAuthenticated(): boolean {
+    return false;
+  }
 }
