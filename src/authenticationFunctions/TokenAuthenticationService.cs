@@ -5,6 +5,7 @@ using BreakableLime.Authentication.models;
 using BreakableLime.Authentication.models.credentials;
 using BreakableLime.Authentication.models.specs;
 using BreakableLime.Repository;
+using BreakableLime.Repository.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 

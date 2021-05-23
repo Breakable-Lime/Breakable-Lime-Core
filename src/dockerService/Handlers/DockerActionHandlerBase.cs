@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BreakableLime.DockerBackgroundService.models.external;
 using Docker.DotNet;
 
@@ -14,6 +15,6 @@ namespace BreakableLime.DockerBackgroundService.Handlers
             ActionSpecification = actionSpecification;
         }
 
-        public abstract void Execute();
+        public abstract Task Execute();
     }
 }

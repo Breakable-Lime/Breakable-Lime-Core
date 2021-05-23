@@ -1,9 +1,10 @@
 using System;
+using System.Threading.Tasks;
 
 namespace BreakableLime.DockerBackgroundService.Handlers
 {
     public interface IDockerActionHandler
     {
-        public void Execute();
+        public Task Execute();
     }
 }

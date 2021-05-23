@@ -53,7 +53,7 @@ namespace BreakableLime.DockerBackgroundService
                         continue;
 
                     var handler = factory.Create(item);
-                    handler.Execute();
+                    await handler.Execute();
                 }
                 
                 //_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

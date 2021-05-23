@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using BreakableLime.Authentication.models;
+using BreakableLime.Repository.Models;
 
 namespace BreakableLime.Authentication.Functions
 {

@@ -14,7 +14,7 @@ namespace BreakableLime.DockerBackgroundService.models.external
         
         public CancellationToken Enqueue(DockerWorkItem workItem)
         {
-            var token = new CancellationToken();
+            var token = workItem.CancellationToken == CancellationToken.None ? new CancellationToken() : workItem.CancellationToken;
             var item = workItem with {CancellationToken = token};
             
             _queue.Enqueue(item);
