@@ -113,6 +113,7 @@ namespace BreakableLime.Host
             AddTokenFactories(services);
 
             services.AddTransient<ICredentialAuthenticationService, CredentialAuthenticationService>();
+            services.AddTransient<IRegistrationService, RegistrationService>();
         }
 
         private void AddTokenFactories(IServiceCollection services)

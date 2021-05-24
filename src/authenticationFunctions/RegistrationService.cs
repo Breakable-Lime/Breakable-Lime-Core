@@ -14,7 +14,7 @@ namespace BreakableLime.Authentication.Functions
         private readonly ILogger _logger;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
 
-        public RegistrationService(ILogger logger, UserManager<ApplicationIdentityUser>  userManager)
+        public RegistrationService(ILogger<RegistrationService> logger, UserManager<ApplicationIdentityUser>  userManager)
         {
             _logger = logger;
             _userManager = userManager;
