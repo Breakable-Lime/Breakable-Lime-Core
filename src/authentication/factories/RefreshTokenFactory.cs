@@ -16,9 +16,9 @@ namespace BreakableLime.Authentication.factories
         
         
         public RefreshTokenFactory(ITokenSigningCredentials credentials,
-            ITokenSpecification specs, JwtSecurityTokenHandler jwtSecurityTokenHandler,
+            ITokenSpecification specs,
             JwtSecurityTokenHandler tokenHandler = null) 
-                : base(credentials, specs, jwtSecurityTokenHandler)
+                : base(credentials, specs, tokenHandler)
         {
             
         }

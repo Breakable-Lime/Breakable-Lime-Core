@@ -29,6 +29,7 @@
     <ProjectReference Include="..\authentication\BreakableLime.Authentication.csproj" />
     <ProjectReference Include="..\dockerService\BreakableLime.DockerBackgroundService.csproj" />
     <ProjectReference Include="..\externalModels\BreakableLime.ExternalModels.csproj" />
+    <ProjectReference Include="..\mediatr\BreakableLime.Mediatr.csproj" />
     <ProjectReference Include="..\repository\BreakableLime.Repository.csproj" />
   </ItemGroup>
 

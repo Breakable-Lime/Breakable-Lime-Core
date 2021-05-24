@@ -7,8 +7,17 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using BreakableLime.Authentication.factories;
+using BreakableLime.Authentication.Functions;
+using BreakableLime.Authentication.models.credentials;
+using BreakableLime.Authentication.models.specs;
+using BreakableLime.DockerBackgroundService.models.external;
+using BreakableLime.Mediatr.handlers.authentication;
 using BreakableLime.Repository;
+using BreakableLime.Repository.Models;
 using BreakableLime.Repository.services;
+using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +68,13 @@ namespace BreakableLime.Host
                 };
             });
 
+            services.AddDbContext<ApplicationDbContext>(c =>
+            {
+                c.UseInMemoryDatabase("Testing-DB");
+            });
+
+            services.AddIdentityCore<ApplicationIdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             services.AddControllers();
 
@@ -83,12 +99,59 @@ namespace BreakableLime.Host
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            
+            //add mediatr
+            services.AddMediatR(typeof(PasswordAuthenticationHandler).Assembly);
 
-            //add db context to DI container
+                //add db context to DI container
             services.AddDbContext<ApplicationDbContext>(c => { c.UseInMemoryDatabase("Testing-db"); });
 
             //add services
             services.AddTransient<IImageService, ImageService>();
+            services.AddSingleton<IDockerWorkQueue>(c => new DockerWorkQueue());
+            
+            AddTokenFactories(services);
+
+            services.AddTransient<ICredentialAuthenticationService, CredentialAuthenticationService>();
+        }
+
+        private void AddTokenFactories(IServiceCollection services)
+        {
+            //add token factories
+            var authenticationCredentials = new TokenSigningCredentials(Configuration["jwt:authenticationKey"]);
+            
+            var refreshCredentials = new TokenSigningCredentials(Configuration["jwt:refreshKey"]);
+            
+            services.AddSingleton<AuthenticationTokenFactory>(c =>
+            {
+                var authenticationTokenSpecifications = 
+                    new AuthenticationTokenSpecification(Configuration["jwt:issuer"], 
+                        Configuration["jwt:audience"], 
+                        TimeSpan.FromHours(24));
+                
+                return new AuthenticationTokenFactory(authenticationCredentials, authenticationTokenSpecifications);
+            });
+            
+            services.AddSingleton<RefreshTokenFactory>(c =>
+            {
+                var refreshTokenSpecs = 
+                    new RefreshTokenSpecification(Configuration["jwt:issuer"], 
+                        Configuration["jwt:audience"], 
+                        TimeSpan.FromHours(24),
+                        "GET",
+                        "..."); //TODO: fix
+                
+                return new RefreshTokenFactory(refreshCredentials, refreshTokenSpecs);
+            });
+        }
+
+        private SecurityKey GetRefreshKey()
+        {
+            var authenticationSecret = Configuration["jwt:refreshKey"];
+            var bytes = Encoding.UTF8.GetBytes(authenticationSecret);
+            var key = new SymmetricSecurityKey(bytes);
+
+            return key;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

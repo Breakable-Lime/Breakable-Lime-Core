@@ -34,10 +34,10 @@ export class LoginComponent implements OnInit {
             let data = res.data;
             
             var authenticationToken = 
-            new Token(data.AuthenticationToken?.Token, TokenType.Authentication, data.AuthenticationToken?.TokenISOExpiery);
+            new Token(data.AuthenticationToken?.Token, TokenType.Authentication, data.AuthenticationToken?.TokenIsoExpiry);
 
             var refreshToken = 
-            new Token(data.RefreshToken?.Token, TokenType.Refresh, data.RefreshToken?.TokenISOExpiery);
+            new Token(data.RefreshToken?.Token, TokenType.Refresh, data.RefreshToken?.TokenIsoExpiry);
 
             this._authenticationService.StoreTokenPair(authenticationToken, refreshToken);
 

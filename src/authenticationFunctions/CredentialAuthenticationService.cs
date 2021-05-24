@@ -15,7 +15,7 @@ namespace BreakableLime.Authentication.Functions
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _dbContext;
 
-        public CredentialAuthenticationService(UserManager<ApplicationIdentityUser> userManager, ILogger logger, ApplicationDbContext dbContext)
+        public CredentialAuthenticationService(UserManager<ApplicationIdentityUser> userManager, ILogger<CredentialAuthenticationService> logger, ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _logger = logger;
